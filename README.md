@@ -1,4 +1,4 @@
-# quiz
+# Gallery
 
 ## Project setup
 ```
