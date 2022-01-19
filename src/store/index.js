@@ -8,7 +8,9 @@ export default new Vuex.Store({
     items: [],
     categories: [],
     imageIDs: [],
-    token: ''
+    products: [],
+    token: '',
+    comments: []
   },
 
   mutations: {
@@ -20,8 +22,16 @@ export default new Vuex.Store({
       state.categories = ctgrs;
     },
 
+    setComments(state, comments){
+      state.comments = comments;
+    },
+
     setImageIDs(state, ids) {
       state.imageIDs = ids;
+    },
+
+    setProducts(state, products) {
+      state.products = products;
     },
 
     addIDsToCategory(state, obj) {
@@ -39,11 +49,8 @@ export default new Vuex.Store({
       localStorage.token = '';
     },
 
-    addComment(state, obj) {
-      const image = state.items.filter( item => item.objectID == obj.artId )[0];
-      if (image) {
-        image.comments.push(obj.comment);
-      }
+    addComment(state, comment) {
+      state.comments.push(comment);
     }
   },
 
@@ -55,21 +62,46 @@ export default new Vuex.Store({
           .then( rows => {commit('addCategories', rows) });
     },
 
-    async fetchIDsByDepartment({ commit, state }, depID) {
+    fetchComments({ commit }){
+      fetch('http://localhost:8080/comments')
+        .then( obj => obj.json() )
+          .then( rows => {commit('setComments', rows) });
+    },
+  
+    createOrder({ commit }, price) {
 
-      const department = state.departments.filter( dep => dep.departmentId === depID )[0];
-      if (department && department['imageIDs']) {
-        commit('setImageIDs', department['imageIDs']);
+      if(localStorage.token == ''){
+        alert("Morate biti ulogovani da bi ste mogli da kupujete");
+        return;
+      }
+
+      const data = {
+        price: price  
+      };
+      fetch('http://localhost:8080/admin/create/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.token}`
+                },
+                body: JSON.stringify(data)
+            })
+            .then( res => res.json() )
+              .then( el => {
+                    alert("Cestitamo!!! Uspesno napravljena porudzbina");
+              });
+            
+    },
+
+    async fetchIDsByCategory({ commit, state }, catID) {
+
+      const category = state.categories.filter( cat => cat.id === catID )[0];
+      if (category && category['products']) {
+        commit('setImageIDs', category['products']);
       } else {
-        const obj = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=${depID}`);
+        const obj = await fetch(`http://localhost:8080/products/category/${catID}`);
         const res = await obj.json();
-
-        commit('addIDsToDepartment', {
-          id: depID,
-          imageIDs: res.objectIDs
-        });
-
-        commit('setImageIDs', res.objectIDs);
+        commit('setProducts', res);
       }
     },
 
@@ -131,9 +163,9 @@ export default new Vuex.Store({
       }).catch(err => console.log(err));
     },
 
-    socket_comment({ commit }, msg) {
-      const comment = JSON.parse(msg);
-      commit('addComment', { artId: comment.artId, comment: comment });
+    socket_comment({ commit }, com) {
+      const comment = JSON.parse(com);
+      commit('addComment', comment);
     }
   }
 })

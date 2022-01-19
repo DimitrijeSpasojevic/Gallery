@@ -9,9 +9,9 @@
         @keydown.enter="onSubmit"
       ></b-form-input>
 
-      <b-card v-for="comment in image.comments" :title="comment.user.name" :key="comment.id">
+      <b-card v-for="comment in comments" :title="comment.user.name" :key="comment.id">
         <b-card-text>
-          {{ comment.body }}
+          User with id:{{comment.userId}} - {{ comment.body }}
         </b-card-text>
       </b-card>
     </div>
@@ -26,10 +26,6 @@
   export default {
     name: 'Comments',
 
-    props: {
-      image: Object
-    },
-
     data() {
       return {
         comment: ''
@@ -38,7 +34,8 @@
 
     computed: {
       ...mapState([
-        'token'
+        'token',
+        'comments'
       ])
     },
 
@@ -48,7 +45,7 @@
       ]),
 
       onSubmit() {
-        this.$socket.emit('comment', { body: this.comment, artId: this.image.objectID, token: this.token });
+        this.$socket.emit('comment', { body: this.comment, token: this.token });
         this.comment = '';
       }
     }

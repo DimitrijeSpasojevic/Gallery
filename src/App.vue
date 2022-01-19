@@ -12,7 +12,7 @@
             <b-nav-item to="/">Home</b-nav-item>
 
             <b-nav-item-dropdown text="Kategorije">
-              <b-dropdown-item v-for="ctgr in categories" :key="ctgr.id">
+              <b-dropdown-item v-for="ctgr in categories" :key="ctgr.id" :to="`/category/${ctgr.id}/${ctgr.name}`">
                 {{ ctgr.name }}
               </b-dropdown-item>
             </b-nav-item-dropdown>

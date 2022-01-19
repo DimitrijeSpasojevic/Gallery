@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
-import Department from '@/views/Department.vue';
+import Category from '@/views/Category.vue';
 import Single from '@/views/Single.vue';
 import Search from '@/views/Search.vue';
 import Register from '@/views/Register.vue';
@@ -16,9 +16,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/department/:id/:name',
-    name: 'Department',
-    component: Department
+    path: '/category/:id/:name',
+    name: 'Category',
+    component: Category
   },
   {
     path: '/single/:id',
