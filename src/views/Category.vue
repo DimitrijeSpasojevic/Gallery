@@ -12,7 +12,6 @@
 <script>
   import Header from '@/components/Header.vue';
   import Product from '@/components/Product';
-  import ImageList from '@/components/ImageList.vue';
   import { mapActions,  mapState } from 'vuex';
 
   export default {
@@ -20,7 +19,6 @@
     
     components: {
       Header,
-      ImageList,
       Product
     },
 

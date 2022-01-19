@@ -22,11 +22,6 @@
             <b-nav-item v-if="!token" to="/register">Register</b-nav-item>
             <b-nav-item v-if="!token" to="/login">Log In</b-nav-item>
             <b-nav-item v-else @click="logout()">Log Out</b-nav-item>
-
-            <b-nav-form>
-              <b-form-input v-model="searchQuery" size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-              <b-button @click="search" size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-            </b-nav-form>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -43,11 +38,6 @@
   export default {
     name: 'App',
 
-    data() {
-      return {
-        searchQuery: ''
-      }
-    },
 
     computed: {
       ...mapState([
@@ -73,15 +63,6 @@
         'removeToken',
         'setToken'
       ]),
-
-      search(e) {
-        e.preventDefault();
-
-        const sq = this.searchQuery;
-        this.searchQuery = '';
-        
-        this.$router.push({ name: 'Search', query: { q: sq } });
-      },
 
       logout() {
         this.removeToken();
