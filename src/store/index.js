@@ -43,13 +43,13 @@ export default new Vuex.Store({
   actions: {
     
     fetchCategories({ commit }) {
-      fetch('http://localhost:8080/categories')
+      fetch('https://web-shop-rest-service.herokuapp.com/categories')
         .then( obj => obj.json() )
           .then( rows => {commit('setCategories', rows) });
     },
 
     fetchComments({ commit }){
-      fetch('http://localhost:8080/comments')
+      fetch('https://web-shop-rest-service.herokuapp.com/comments')
         .then( obj => obj.json() )
           .then( rows => {commit('setComments', rows) });
     },
@@ -64,7 +64,7 @@ export default new Vuex.Store({
       const data = {
         price: price  
       };
-      fetch('http://localhost:8080/admin/create/order', {
+      fetch('https://web-shop-rest-service.herokuapp.com/admin/create/order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -85,14 +85,14 @@ export default new Vuex.Store({
       if (category && category['products']) {
         commit('setProducts', category['products']);
       } else {
-        const obj = await fetch(`http://localhost:8080/products/category/${catID}`);
+        const obj = await fetch(`https://web-shop-rest-service.herokuapp.com/products/category/${catID}`);
         const res = await obj.json();
         commit('setProducts', res);
       }
     },
 
     register({ commit }, obj) {
-      fetch('http://localhost:8080/register', {
+      fetch('https://web-shop-rest-service.herokuapp.com/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(obj)
@@ -101,7 +101,7 @@ export default new Vuex.Store({
     },
 
     login({ commit }, obj) {
-      fetch('http://localhost:9000/login', {
+      fetch('https://web-shop-auth-servis.herokuapp.com/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(obj)
