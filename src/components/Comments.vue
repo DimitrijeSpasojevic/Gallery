@@ -9,7 +9,7 @@
         @keydown.enter="onSubmit"
       ></b-form-input>
 
-      <b-card v-for="comment in comments" :title="comment.user.name" :key="comment.id">
+      <b-card v-for="comment in comments" :title="'Komentar'" :key="comment.id">
         <b-card-text>
           User with id:{{comment.userId}} - {{ comment.body }}
         </b-card-text>
