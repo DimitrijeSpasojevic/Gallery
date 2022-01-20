@@ -2,7 +2,7 @@
   <div id="app">
     <Header subtitle="Home"/>
     <img
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/The_Metropolitan_Museum_of_Art_Logo.svg/1028px-The_Metropolitan_Museum_of_Art_Logo.svg.png"
+      src="..\assets\onlineshop.png"
       width="200"
       alt="Logo"
     />

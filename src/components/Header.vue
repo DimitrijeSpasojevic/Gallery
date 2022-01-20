@@ -1,6 +1,6 @@
 <template>
   <div class="naslov">
-    <h1>The Metropolitan Museum of Art</h1>
+    <h1>The Right Place</h1>
     <h3 v-if="subtitle">{{ subtitle }}</h3>
   </div>
 </template>
